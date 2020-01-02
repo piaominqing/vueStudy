@@ -19,6 +19,7 @@
 import NForm from './NForm'
 import NFormItem from './NFormItem'
 import NInput from './NInput'
+import Notice from '../Notice'
 export default {
   data () {
     return {
@@ -40,18 +41,18 @@ export default {
   methods:{
     login(){
       this.$refs["loginForm"].validate(valid => {
-        // const notice = this.$create(Notice, {
-        //   title: "社会你杨哥喊你来搬砖",
-        //   message: valid ? "请求登录!" : "校验失败!",
-        //   duration: 2000
-        // });
-        // notice.show();
-        if (valid) {
-          alert("submit");
-        } else {
-          console.log("error submit!");
-          return false;
-        }
+        const notice = this.$extendsCreate(Notice, {
+          title: "社会你杨哥喊你来搬砖",
+          message: valid ? "请求登录!" : "校验失败!",
+          duration: 2000
+        });
+        notice.show();
+        // if (valid) {
+        //   alert("submit");
+        // } else {
+        //   console.log("error submit!");
+        //   return false;
+        // }
       });
     }
   }
