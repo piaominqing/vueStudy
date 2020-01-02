@@ -19,7 +19,7 @@ export default {
         parent = parent.$parent;
 
         if (parent) {
-          name = parent.$options.componentName;
+          name = parent.$options._componentTag;
         }
       }
       
