@@ -1,18 +1,18 @@
 import Vue from 'vue'
 
 function extendsCreate(Comp,props){
-  const fn = Vue.extend({
-    render: h => h(Comp, {props})
-  });
-  const vm = new fn().$mount()
+  // 获取组件构造函数
+  const Fn = Vue.extend(Comp);
+  // 创建组件实例
+  const comp = new Fn({propsData:props})
+  comp.$mount()
   // 获取真实dom
-  document.body.appendChild(vm.$el)
-  const comp = vm.$children[0]
+  document.body.appendChild(comp.$el)
 
   // 删除
   comp.remove = function() {
-    document.body.removeChild(vm.$el)
-    vm.$destroy()
+    document.body.removeChild(comp.$el)
+    comp.$destroy()
   }
 
   return comp

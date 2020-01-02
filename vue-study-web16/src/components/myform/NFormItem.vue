@@ -8,6 +8,7 @@
 
 <script>
 import Schema from "async-validator";
+import emitter from '../../mixins/emitter';
 
 export default {
   inject: ["form"],
@@ -22,16 +23,21 @@ export default {
   },
   data () {
     return {
-      error:''
+      error: ''
     }
   },
+  mixins: [emitter],
   mounted () {
-    this.$on('validate',()=> {
+    this.$on('validate', () => {
       this.validate()
     })
+    if (this.prop) {
+      this.dispatch('NForm', 'addFormItem', [this])
+    }
+
   },
-  methods:{
-    validate(){
+  methods: {
+    validate () {
       // 规则
       const rules = this.form.rules[this.prop];
       // 当前值

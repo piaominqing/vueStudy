@@ -1,8 +1,6 @@
 import Vue from 'vue'
 
 function create(Component, props) {
-  // 组件构造函数如何获取？
-  // 1.Vue.extend()
   // 2.render
   const vm = new Vue({
     // h是createElement, 返回VNode，是虚拟dom
