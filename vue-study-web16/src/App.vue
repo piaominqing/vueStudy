@@ -4,7 +4,8 @@
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
     <!-- <communication></communication> -->
     <!-- <slot-example></slot-example> -->
-    <form-example></form-example>
+    <!-- <form-example></form-example> -->
+    <my-form></my-form>
   </div>
 </template>
 
@@ -13,6 +14,7 @@ import HelloWorld from './components/HelloWorld.vue'
 import communication from '@/components/communication';
 import SlotExample from '@/components/slots'
 import FormExample from '@/components/form'
+import MyForm from '@/components/myform'
 
 export default {
   name: 'app',
@@ -20,7 +22,8 @@ export default {
     HelloWorld,
     communication,
     SlotExample,
-    FormExample
+    FormExample,
+    MyForm
   }
 }
 </script>
