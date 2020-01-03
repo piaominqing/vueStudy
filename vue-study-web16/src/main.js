@@ -8,7 +8,7 @@ Vue.config.productionTip = false
 // 事件总线
 Vue.prototype.$bus = new Vue()
 Vue.prototype.$create = create
-Vue.prototype.$extendsCreate = extendsCreate
+Vue.use(extendsCreate)
 
 new Vue({
   render: h => h(App),

@@ -19,7 +19,6 @@
 import NForm from './NForm'
 import NFormItem from './NFormItem'
 import NInput from './NInput'
-import Notice from '../Notice'
 export default {
   data () {
     return {
@@ -41,7 +40,7 @@ export default {
   methods:{
     login(){
       this.$refs["loginForm"].validate(valid => {
-        const notice = this.$extendsCreate(Notice, {
+        const notice = this.$alert({
           title: "社会你杨哥喊你来搬砖",
           message: valid ? "请求登录!" : "校验失败!",
           duration: 2000

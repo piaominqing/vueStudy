@@ -1,5 +1,5 @@
 import Vue from 'vue'
-
+import Notice from '@/components/Notice'
 function extendsCreate(Comp,props){
   // 获取组件构造函数
   const Fn = Vue.extend(Comp);
@@ -18,4 +18,10 @@ function extendsCreate(Comp,props){
   return comp
 }
 
-export default extendsCreate
+export default {
+  install(Vue){
+    Vue.prototype.$alert = function(options){
+      return extendsCreate(Notice, options)
+    }
+  }
+}
