@@ -3,23 +3,37 @@ import Link from './components/link'
 let _Vue
 class VueRouter {
   constructor(options){
-    this.options = options
+    this.$options = options
     
-    const initial = window.location.hash.slice(1) || '/'
-    _Vue.util.defineReactive(this, 'current', initial)
+    this.current = window.location.hash.slice(1) || '/'
+    _Vue.util.defineReactive(this, 'matched', [])
+    this.match()
     // 监听url变化
     window.addEventListener('hashchange', this.onHashChange.bind(this))
     window.addEventListener('load', this.onHashChange.bind(this))
 
-    // // 创建一个路由映射表
-    // this.routeMap = {}
-    // options.routes.forEach(route => {
-    //   this.routeMap[route.path] = route
-    // })
-
   }
   onHashChange(){
     this.current = window.location.hash.slice(1)
+    this.matched = []
+    this.match()
+  }
+  match(router){
+    let routes = router || this.$options.routes
+    for (const route of routes) {
+      if(route.path === '/' && this.current === '/'){
+        this.matched.push(route)
+        return
+      }
+
+      if(route.path !== '/' && this.current.indexOf(route.path) !== -1){
+        this.matched.push(route)
+        if(route.children){
+          this.match(route.children)
+        }
+        return
+      }
+    }
   }
 }
 
@@ -29,7 +43,7 @@ VueRouter.install = function (Vue){
   Vue.mixin({
     beforeCreate(){
       if(this.$options.router){
-        _Vue.prototype.$router = this.$options.router
+        Vue.prototype.$router = this.$options.router
       }
     }
   })
