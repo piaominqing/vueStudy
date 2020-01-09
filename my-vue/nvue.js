@@ -90,11 +90,12 @@ function observe (obj) {
     return
   }
   // 创建Observer实例
-  new Observer(obj)
+  new ObServer(obj)
 }
 
 function observeArray (items) {
-  for (var i = 0, l = items.length; i < l; i++) {
+  let length = items.length
+  for (let i = 0; i < length; i++) {
     observe(items[i]);
   }
 };

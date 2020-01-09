@@ -9,11 +9,16 @@ class Compiler {
   }
   compile(el){
     const childNodes = el.childNodes
+    console.log(childNodes)
     Array.from(childNodes).forEach((childNode)=>{
       if(this.isElement(childNode)){
         this.compileElement(childNode)
       }else if(this.isTextContent(childNode)){
         this.compileTextContent(childNode)
+      }
+
+      if(childNode.childNodes){
+        this.compile(childNode)
       }
     })
   }
@@ -26,9 +31,24 @@ class Compiler {
   compileTextContent(node){
     this.update(node,RegExp.$1, 'text')
   }
+  compileElement(node){
+    let attrs = node.attributes
+    Array.from(attrs).forEach(attr => {
+      const attrName = attr.name
+      const exp = attr.value
+      if(this.isDirective(attrName)){
+
+        const dir = attrName.substring(2)
+        this[dir] && this[dir](node, exp)
+      }
+    })
+  }
+  isDirective(str){
+    return str.indexOf('k-') === 0
+  }
   update(node, key, type){
     // 初始化
-    const fn = type + 'Updater'
+    const fn = this[type + 'Updater']
     fn && fn(node,this.$vm[key])
 
     // 更新处理
@@ -39,5 +59,11 @@ class Compiler {
   }
   textUpdater(node,val){
     node.textContent = val
+  }
+  htmlUpdater(node,val){
+    node.innerHTML = val
+  }
+  html(node,val){
+    this.update(node, val, 'html')
   }
 }
