@@ -9,7 +9,6 @@ class Compiler {
   }
   compile(el){
     const childNodes = el.childNodes
-    console.log(childNodes)
     Array.from(childNodes).forEach((childNode)=>{
       if(this.isElement(childNode)){
         this.compileElement(childNode)

@@ -9,6 +9,7 @@
 <body>
   <div id="app">
     <p>{{counter}}</p>
+    <p>{{list}}</p>
     <p k-html="counter"></p>
   </div>
 
@@ -20,11 +21,13 @@
     const app = new Vue({
       el:'#app',
       data: {
-        counter: 1
+        counter: 1,
+        list: [1,2,3]
       },
     })
     setInterval(() => {
       app.counter++
+      app.list.push(11)
     }, 1000);
     
   </script>
