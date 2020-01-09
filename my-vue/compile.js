@@ -47,8 +47,6 @@ class Compiler {
         this[dir] && this[dir](node, exp)
       }else if(this.isEvent(attrName)){
         const dir = attrName.substring(1)
-        console.log(dir)
-        console.log(this.$vm)
         node.addEventListener(dir,this.$vm.$options.methods[exp])
       }
     })
