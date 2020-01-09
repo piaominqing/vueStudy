@@ -36,14 +36,28 @@ class Compiler {
       const attrName = attr.name
       const exp = attr.value
       if(this.isDirective(attrName)){
-
+        
         const dir = attrName.substring(2)
+        if(dir==='model'){
+          const that = this
+          node.addEventListener('input',function(e){
+            that.$vm[exp] = e.target.value
+          })
+        }
         this[dir] && this[dir](node, exp)
+      }else if(this.isEvent(attrName)){
+        const dir = attrName.substring(1)
+        console.log(dir)
+        console.log(this.$vm)
+        node.addEventListener(dir,this.$vm.$options.methods[exp])
       }
     })
   }
   isDirective(str){
     return str.indexOf('k-') === 0
+  }
+  isEvent(str){
+    return str.indexOf('@') === 0
   }
   update(node, key, type){
     // 初始化
@@ -58,6 +72,12 @@ class Compiler {
   }
   textUpdater(node,val){
     node.textContent = val
+  }
+  modelUpdater(node,val){
+    node.value = val
+  }
+  model(node,val){
+    this.update(node, val, 'model')
   }
   htmlUpdater(node,val){
     node.innerHTML = val

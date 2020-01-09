@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
 </head>
+
 <body>
   <div id="app">
-    <p>{{counter}}</p>
+    <p @click="alert">{{counter}}</p>
     <p>{{list}}</p>
     <p k-html="counter"></p>
+    <input k-model="counter"></input>
   </div>
 
   <script src="./nvue.js"></script>
@@ -19,17 +22,23 @@
   <script>
 
     const app = new Vue({
-      el:'#app',
+      el: '#app',
       data: {
         counter: 1,
-        list: [1,2,3]
+        list: [1, 2, 3]
       },
+      methods: {
+        alert() {
+          alert(123)
+        }
+      }
     })
-    setInterval(() => {
-      app.counter++
-      app.list.push(11)
-    }, 1000);
-    
+    // setInterval(() => {
+    //   app.counter++
+    //   app.list.push(11)
+    // }, 1000);
+
   </script>
 </body>
+
 </html>
