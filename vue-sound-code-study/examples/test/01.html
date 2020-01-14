@@ -11,12 +11,15 @@
 <body>
     <div id="app">{{foo}}</div>
     <script>
-        new Vue({
+        var vm = new Vue({
             el:'#app',
             data:{
                 foo:'foo'
             }
         })
+        setTimeout(()=>{
+            vm.foo = 'fffffffff'
+        },1000)
     </script>
 </body>
 </html>
