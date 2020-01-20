@@ -70,13 +70,23 @@ function createKeyToOldIdx (children, beginIdx, endIdx) {
 export function createPatchFunction (backend) {
   let i, j
   const cbs = {}
-
+  /**
+   * modules
+   * modules[0].create = updateAttrs
+   * modules[0].update = updateAttrs
+   * modules[5].create = _enter
+   * modules[5].activate = _enter
+   * modules[5].remove = remove
+   */
   const { modules, nodeOps } = backend
-
+  // 将modules的内容根据hooks装入到cbs里，以便后续在钩子调用相应函数。
   for (i = 0; i < hooks.length; ++i) {
     cbs[hooks[i]] = []
     for (j = 0; j < modules.length; ++j) {
       if (isDef(modules[j][hooks[i]])) {
+        // cbs.create = [updateAttrs,updateClass...]
+        // cbs.activate = [_enter]
+        // cbs.remove = [remove]
         cbs[hooks[i]].push(modules[j][hooks[i]])
       }
     }
@@ -293,7 +303,7 @@ export function createPatchFunction (backend) {
       nodeOps.appendChild(vnode.elm, nodeOps.createTextNode(String(vnode.text)))
     }
   }
-
+  // 直译:是否打过补丁 打完补丁之后必有vnode.componentInstance._vnode
   function isPatchable (vnode) {
     while (vnode.componentInstance) {
       vnode = vnode.componentInstance._vnode
@@ -559,8 +569,9 @@ export function createPatchFunction (backend) {
 
     const oldCh = oldVnode.children
     const ch = vnode.children
-    // 属性更新
+    // 更新属性节点
     if (isDef(data) && isPatchable(vnode)) {
+      // 调用 update钩子内所有函数（全部模块一并更新，实际更新函数内会判断是否有变化）
       for (i = 0; i < cbs.update.length; ++i) cbs.update[i](oldVnode, vnode)
       if (isDef(i = data.hook) && isDef(i = i.update)) i(oldVnode, vnode)
     }
@@ -713,7 +724,7 @@ export function createPatchFunction (backend) {
       return node.nodeType === (vnode.isComment ? 8 : 3)
     }
   }
-
+  // return patch function
   return function patch (oldVnode, vnode, hydrating, removeOnly) {
     if (isUndef(vnode)) {
       if (isDef(oldVnode)) invokeDestroyHook(oldVnode)
