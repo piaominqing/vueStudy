@@ -8,5 +8,6 @@ import platformModules from 'web/runtime/modules/index'
 // the directive module should be applied last, after all
 // built-in modules have been applied.
 const modules = platformModules.concat(baseModules)
-
+// nodeOps 基本dom操作
+// modules 内涵内部钩子函数
 export const patch: Function = createPatchFunction({ nodeOps, modules })

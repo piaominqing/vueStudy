@@ -204,15 +204,21 @@ export function set (target: Array<any> | Object, key: any, val: any): any {
   ) {
     warn(`Cannot set reactive property on undefined, null, or primitive value: ${(target: any)}`)
   }
+  // 数组
   if (Array.isArray(target) && isValidArrayIndex(key)) {
+    // 当key 大于数组长度 扩充数组
     target.length = Math.max(target.length, key)
+    // 替换操作
     target.splice(key, 1, val)
     return val
   }
+   // 对象
   if (key in target && !(key in Object.prototype)) {
+    // 检测key 是否已经在对象中
     target[key] = val
     return val
   }
+  // 否则对象响应化处理
   const ob = (target: any).__ob__
   if (target._isVue || (ob && ob.vmCount)) {
     process.env.NODE_ENV !== 'production' && warn(
