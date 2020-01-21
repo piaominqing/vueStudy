@@ -58,7 +58,7 @@ Vue.prototype.$mount = function (
     }
     // 以上获取到template时
     if (template) {
-      // 待深入了解
+      // 根据template 获取render函数
       const { render, staticRenderFns } = compileToFunctions(template, {
         outputSourceRange: process.env.NODE_ENV !== 'production',
         shouldDecodeNewlines,

@@ -198,7 +198,7 @@ export function parse (
       )
     }
   }
-
+  // 核心代码:解析HTML
   parseHTML(template, {
     warn,
     expectHTML: options.expectHTML,
@@ -270,6 +270,7 @@ export function parse (
       if (platformIsPreTag(element.tag)) {
         inPre = true
       }
+      // 关键指令解析
       if (inVPre) {
         processRawAttrs(element)
       } else if (!element.processed) {

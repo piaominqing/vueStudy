@@ -33,6 +33,7 @@ import {
 } from 'weex/runtime/recycle-list/render-component-template'
 
 // inline hooks to be invoked on component VNodes during patch
+// 默认组件管理钩子
 const componentVNodeHooks = {
   init (vnode: VNodeWithData, hydrating: boolean): ?boolean {
     if (
@@ -44,10 +45,12 @@ const componentVNodeHooks = {
       const mountedNode: any = vnode // work around flow
       componentVNodeHooks.prepatch(mountedNode, mountedNode)
     } else {
+      // 创建组件实例
       const child = vnode.componentInstance = createComponentInstanceForVnode(
         vnode,
         activeInstance
       )
+      // 创建完成并挂载
       child.$mount(hydrating ? vnode.elm : undefined, hydrating)
     }
   },
@@ -97,7 +100,7 @@ const componentVNodeHooks = {
 }
 
 const hooksToMerge = Object.keys(componentVNodeHooks)
-
+// 创建自定义组件VNode的地方
 export function createComponent (
   Ctor: Class<Component> | Function | Object | void,
   data: ?VNodeData,
@@ -143,7 +146,7 @@ export function createComponent (
       )
     }
   }
-
+  // 处理传递的数据
   data = data || {}
 
   // resolve constructor options in case global mixins are applied after
@@ -183,6 +186,7 @@ export function createComponent (
   }
 
   // install component management hooks onto the placeholder node
+  // 安装自定义组件管理钩子，比如初始化钩子init等
   installComponentHooks(data)
 
   // return a placeholder vnode
@@ -222,9 +226,10 @@ export function createComponentInstanceForVnode (
   }
   return new vnode.componentOptions.Ctor(options)
 }
-
+// 钩子合并操作
 function installComponentHooks (data: VNodeData) {
   const hooks = data.hook || (data.hook = {})
+  //跟用户传递的钩子merge
   for (let i = 0; i < hooksToMerge.length; i++) {
     const key = hooksToMerge[i]
     const existing = hooks[key]
