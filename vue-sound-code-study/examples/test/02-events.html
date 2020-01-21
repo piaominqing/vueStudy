@@ -9,17 +9,16 @@
 
 </head>
 <body>
-    <div id="app">{{foo}}</div>
+    <div id="app">
+        _c('p',{attrs:{"onclick":"alert('d')"}},[_v("点我")])
+        <p onclick="alert('d')">点我</p>
+        _c('h1',{on:{"click":function($event){return alert('c')}}},[_v("点我")])
+        <h1 @click="alert('c')">点我</h1>
+    </div>
     <script>
         var vm = new Vue({
-            el:'#app',
-            data:{
-                foo:'foo'
-            }
+            el:'#app'
         })
-        setTimeout(()=>{
-            vm.foo = 'fffffffff'
-        },1000)
     </script>
 </body>
 </html>
