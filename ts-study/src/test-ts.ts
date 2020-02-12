@@ -91,3 +91,30 @@ class Person {
     // public age 公共属性
   }
 }
+
+/**
+ * 泛型（Generics）是指在定义函数、接口或类的时候，不预先指定具体的类型，而在使用的时候再指定 类型的一种特性。以此增加代码通用性。
+ * 泛型优点：
+ * 函数和类可以支持多种类型，更加通用 
+ * 不必编写多条重载，冗长联合类型，可读性好 
+ * 灵活控制类型约束
+ */
+
+// 不用泛型 
+// interface Result { 
+//   ok: 0 | 1; 
+//   data: Feature[]; 
+// }
+// 使用泛型 
+interface Result<T> {  
+  ok: 0 | 1;  
+  data: T; 
+}
+// 泛型方法 
+function getResult<T>(data: T): Result<T> {  
+  return {ok:1, data};
+} 
+// 用尖括号方式指定T为string 
+getResult<string>('hello') 
+// 用类型推断指定T为number 
+getResult(1)
