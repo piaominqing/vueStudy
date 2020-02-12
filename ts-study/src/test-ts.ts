@@ -81,3 +81,13 @@ val4 = {
   first:1,
   second:2
 }
+
+
+// 类访问修饰符
+class Person {
+  private name: string = ''  //私有属性
+  protected idCard: number = 0 //子类访问
+  constructor(public age= '18'){
+    // public age 公共属性
+  }
+}
