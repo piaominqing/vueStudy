@@ -9,12 +9,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue, Emit, Watch } from "vue-property-decorator";
 import { Feature } from "@/types/index";
 @Component
-export default class HelloWorld extends Vue {
+export default class Test extends Vue {
   // vue中的prop需要使用Prop装饰器
-  @Prop() private msg!: string;
+  @Prop({type: String, required: true}) private msg!: string;
   // 类的属性即vu中的data
   features: Feature[] = [];
   // 类的方法即为vue中的method
