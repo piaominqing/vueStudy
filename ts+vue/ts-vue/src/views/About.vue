@@ -1,7 +1,7 @@
 <template>
   <div class="about">
     <h1>This is an about page</h1>
-    <Test msg="first"/>
+    <Test :msg="msg" @update-title="updateTitle"/>
   </div>
 </template>
 <script>
@@ -10,8 +10,18 @@ import Test from '@/components/Test.vue'
 
 export default {
   name: 'Home',
+  data(){
+    return {
+      msg: 'first'
+    }
+  },
   components: {
     Test
+  },
+  methods:{
+    updateTitle(title){
+      this.msg = title
+    }
   }
 }
 </script>

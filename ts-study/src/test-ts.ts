@@ -118,3 +118,46 @@ function getResult<T>(data: T): Result<T> {  
 getResult<string>('hello') 
 // 用类型推断指定T为number 
 getResult(1)
+
+// 装饰器
+
+// 类装饰器
+// sayMake运行时会被调用
+// target 类的构造函数
+// 类装饰器表达式会在运行时当作函数被调用，类的构造函数作为其唯一的参数
+function sayMake(target: Function){
+  console.log(target)
+  target.prototype.sayMake = function (){
+    console.log('im a '+this.make + 'car')
+  }
+}
+//方法装饰器
+// 这里通过修改descriptor.value扩展了bar方法
+function log(target: any, name:string, descriptor: any){
+  console.log(target, name, descriptor)
+  const oldFn = descriptor.value
+  descriptor.value = function (val: string){
+    console.log('set make:'+val)
+    oldFn.call(this, val)
+  }
+}
+// 属性装饰器
+function defaultMake (defaultValue:string){
+  return function (target:any, name:string){
+    target[name] = defaultValue
+  }
+}
+@sayMake
+class Car {
+  @defaultMake('Audi')
+  make!:string
+  @log
+  setMake(val: string){
+    this.make = val
+  }
+}
+const car = new Car()
+console.log(car.make)
+// @ts-ignore
+car.sayMake()
+car.setMake('jieda')

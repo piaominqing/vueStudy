@@ -1,5 +1,8 @@
 <template>
   <div>
+    <p @click="add">{{counter}}</p>
+    <input type="text" placeholder="修改title" @keyup.enter="updateTitle">
+    <p>{{msg}}</p>
     <input type="text" placeholder="输入新特性" @keyup.enter="addFeature">
     <ul>
       <li v-for="feature in features" :key="feature.id">{{feature.name}}</li>
@@ -10,11 +13,20 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from "vue-property-decorator";
+import { Action, State } from "vuex-class";
 import { Feature } from "@/types/index";
 @Component
 export default class Test extends Vue {
   // vue中的prop需要使用Prop装饰器
   @Prop({type: String, required: true}) private msg!: string;
+  @Emit()
+  updateTitle(e: KeyboardEvent) { //自定义事件名需为 update-title
+    return (e.target as HTMLInputElement).value
+  }
+  @Watch('msg')
+  onWatchChange(oldValue: string, newValue: string){
+    console.log(oldValue, newValue)
+  }
   // 类的属性即vu中的data
   features: Feature[] = [];
   // 类的方法即为vue中的method
@@ -34,6 +46,8 @@ export default class Test extends Vue {
   get count() {
     return this.features.length;
   }
+  @State counter!: number
+  @Action('addCounter') add!: number
 }
 </script>
 
