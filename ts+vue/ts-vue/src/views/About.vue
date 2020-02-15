@@ -1,12 +1,14 @@
 <template>
   <div class="about">
     <h1>This is an about page</h1>
-    <Test :msg="msg" @update-title="updateTitle"/>
+    <!-- <Test :msg="msg" @update-title="updateTitle"/> -->
+    <Test2 :msg="msg" @update-title="updateTitle"/>
   </div>
 </template>
 <script>
 // @ is an alias to /src
 import Test from '@/components/Test.vue'
+import Test2 from '@/components/Test2.vue'
 
 export default {
   name: 'Home',
@@ -16,7 +18,8 @@ export default {
     }
   },
   components: {
-    Test
+    // Test,
+    Test2
   },
   methods:{
     updateTitle(title){
